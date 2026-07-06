@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["bun"],
+    "plugins": [],
+    "incremental": false
+  },
+  "include": ["./**/*.ts"],
+  "exclude": []
+}
