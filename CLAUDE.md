@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-**Built through PLAN.md Phase 5** (scaffold, engine, consent gate, slider, interrupts, styling, unit + e2e tests). Phase 6 (private GitHub repo → Cloudflare Pages, iOS Safari smoke test) is not done. `SPEC.md` remains the source of truth for requirements and architecture.
+**Built and deployed.** All PLAN.md phases done: private GitHub repo (`Ibenthinkin/dreamachine`) auto-deploys to Cloudflare Pages on push to `main` (build `bun run build`, output `out`). Desktop verified live. Outstanding: iOS Safari smoke test on a real iPhone (SPEC §12). `SPEC.md` remains the source of truth for requirements and architecture.
 
 ## What this is
 
