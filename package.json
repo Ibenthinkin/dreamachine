@@ -6,7 +6,9 @@
     "dev": "bun run --bun next dev",
     "build": "bun run --bun next build",
     "preview": "bunx wrangler pages dev out",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:e2e": "bun run build && bunx playwright test"
   },
   "dependencies": {
     "next": "16.2.10",
