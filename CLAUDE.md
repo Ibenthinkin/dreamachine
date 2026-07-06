@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-**Not yet scaffolded.** The repo currently contains only `SPEC.md` — the build-ready technical specification. Read `SPEC.md` in full before any implementation work; it is the source of truth for requirements, architecture, and build order (§11: Phase 0 core engine prototype first, then consent gate, slider, safety interrupts, styling, tests, deploy).
+**Built through PLAN.md Phase 5** (scaffold, engine, consent gate, slider, interrupts, styling, unit + e2e tests). Phase 6 (private GitHub repo → Cloudflare Pages, iOS Safari smoke test) is not done. `SPEC.md` remains the source of truth for requirements and architecture.
 
 ## What this is
 

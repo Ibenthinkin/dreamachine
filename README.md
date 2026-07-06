@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dreamachine
 
-## Getting Started
+A single-page, fully static, client-only recreation of Brion Gysin's Dreamachine:
+a full-screen light strobe phase-locked to an isochronic audio tone, driven by one
+frequency slider (4–13Hz, theta through alpha). Experienced with eyes closed — the
+screen is the light source.
 
-First, run the development server:
+**Safety:** 18+ only. Not for anyone with epilepsy, a history of seizures, or
+photosensitivity. Not a medical device. A mandatory consent gate fronts the app and
+every interrupt (Stop button, Space, Escape, tap anywhere) halts both outputs
+instantly.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+See `SPEC.md` for the full technical specification and `PLAN.md` for the build plan.
+
+## Commands
+
+```sh
+bun install
+bun run dev        # dev server
+bun run build      # static export to out/
+bun run preview    # serve out/ via wrangler pages dev
+bun run test       # Vitest unit tests
+bun run test:e2e   # build + Playwright e2e against the static export
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Architecture in one paragraph
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`lib/strobeEngine.ts` owns both outputs, driven by a single clock —
+`AudioContext.currentTime`. The audio path gates a 200Hz sine carrier with gain
+events scheduled in a ~100ms lookahead window; the visual path is a
+`requestAnimationFrame` loop deriving on/off from the same `currentTime` via a pure
+phase function. Light and tone cannot drift apart because neither has its own timer.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deploys as a static export (`out/`) to Cloudflare Pages. No backend, no analytics,
+nothing leaves the browser.
