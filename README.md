@@ -10,6 +10,8 @@ photosensitivity. Not a medical device. A mandatory consent gate fronts the app 
 every interrupt (Stop button, Space, Escape, tap anywhere) halts both outputs
 instantly.
 
+see the demo at: https://dreamachine-s5k.pages.dev/
+
 See `SPEC.md` for the full technical specification and `PLAN.md` for the build plan.
 
 ## Commands
