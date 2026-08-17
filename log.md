@@ -4,6 +4,14 @@ Running log for Dreamachine. Newest entries at the top, under the latest `## YYY
 
 ### [[08-17-26 Mon]] — Log migrated repo-side; prepped for going public; README rewritten as a portfolio piece
 
+**History and concept folded into the README, with photos.** Ben supplied three sources (Wikipedia, Flashbak, Rex Research) plus the modern [dreamachine.world](https://dreamachine.world/about/) project, and asked for the concept explained and illustrated. New "Where this comes from" section: Gysin's December 1958 bus ride outside Marseilles, W. Grey Walter's *The Living Brain* supplying the mechanism, Sommerville building the first cylinder in 1959, the 1961 patent and the total commercial failure after the 1962 Paris showing, then the 2022 UNBOXED reimagining (Jennifer Crook / Assemble / Jon Hopkins, with Anil Seth and Fiona Macpherson on the science side).
+
+Placed it *after* the hook and *before* the invariant, and trimmed the opening paragraph that now duplicated it. It ends on a bridge into the engineering rather than trailing off: the circulated build plans put the classic 78-rpm cylinder near 20Hz, dropping into alpha only at 45 — which lands the historical machine inside the band this version refuses to enter. The history now argues *for* the safety cap instead of sitting beside it.
+
+**On the photos — the one Ben specifically asked for is the one I didn't use.** The famous Gysin-and-Burroughs shot is Charles Gatewood's, 1972, still in copyright. Embedding it in a public portfolio repo would be plain infringement and the exact inverse of the liability care this same session just built in. Linked it in the sources section instead, with a note on why it isn't shown. Substituted two verified public-domain images — checked licensing via the MediaWiki/Commons API *before* downloading rather than assuming: Carl Van Vechten's 1957 Gysin portrait (Library of Congress, PD, and its op-art backdrop happens to suit the subject perfectly) and a lit Dreamachine cylinder from Commons (PD). Pulled the 640px LoC service copy over the smaller Commons one, resized the 3.8MB Commons photo to 900px/132KB, and put both in `docs/images/` rather than `public/` so they stay out of the static export.
+
+Verified the render instead of assuming again: pushed the README through GitHub's own `/markdown` API and screenshotted it. That caught a real trap — `mode: gfm` inserts `<br>` at every source line break, which would have made the hard-wrapped paragraphs look broken. Re-rendered in document mode (zero `<br>`, what GitHub actually uses for README files) to confirm paragraphs reflow, and eyeballed the final photo layout at 1000px.
+
 **README rewritten to carry the repo as a portfolio piece.** Ben's goal: someone lands cold and comes away impressed by the writing's readability and usefulness. Picked the spine deliberately before writing — the options were "this person engineers carefully" vs. the art-object story vs. fork-me documentation, and he chose engineering judgment, so the README opens on the *drift problem* rather than on Gysin. Gysin gets two clauses of orientation and then it's the invariant, the architecture, the subtle bits, and the evidence.
 
 The argument it makes: the app never synchronizes light to tone, it makes both **pure functions of one clock**, so drift isn't corrected — it's unrepresentable. Sections follow from that: the shared half-cycle grid (`t = j/2f`), a mermaid diagram of the two paths hanging off `AudioContext.currentTime`, the pure core, the mid-session frequency change (the genuinely subtle part — cancel the old grid, anchor at current gain, ramp to what the new grid says, resume), and a "Proving it" section built around the one test that checks the invariant directly by asking `isStrobeOn` whether it agrees with the audio scheduler's own gate events.
@@ -39,6 +47,7 @@ Entries below 07-08 are carried over verbatim from the vault-side log.
 *Session spend: 3.37M tok (in 94 · out 27.0k · cache r 3.21M / w 134.1k) · ~$3.62 · opus-5 · 11:20→11:47*
 *Session spend: 337.3k tok (in 8 · out 3.3k · cache r 331.1k / w 2.9k) · ~$0.28 · opus-5 · 11:47→11:48*
 *Session spend: 8.64M tok (in 186 · out 76.1k · cache r 7.85M / w 708.2k) · ~≥$12.56 · opus-5 + opus-4-7 + &lt;synthetic&gt; · 11:48→15:53*
+*Session spend: 11.48M tok (in 142 · out 58.8k · cache r 11.33M / w 87.8k) · ~$8.01 · opus-5 · 15:53→16:32*
 
 ## 2026-07
 

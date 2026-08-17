@@ -2,11 +2,9 @@
 
 **A strobing light and a pulsing tone that cannot drift apart.**
 
-Brion Gysin and Ian Sommerville built the original Dreamachine at the start of the 1960s — a
-slotted cylinder spinning on a record turntable, throwing flicker onto closed eyelids at
-roughly alpha-wave frequency. This is that idea as a web page: a full-screen strobe locked to
-an isochronic tone, driven by a single slider from 4 to 13 Hz. You use it with your eyes
-closed. The screen is the lamp.
+A full-screen strobe locked to an isochronic tone, driven by a single slider from 4 to 13 Hz —
+Brion Gysin's flicker machine of 1959, reduced to a web page. You use it with your eyes closed.
+The screen is the lamp.
 
 The interesting part isn't the effect. It's the word *cannot* in that first line.
 
@@ -20,6 +18,53 @@ The interesting part isn't the effect. It's the word *cannot* in that first line
 > want to try it.
 
 ---
+
+## Where this comes from
+
+In December 1958, Brion Gysin was dozing on a bus outside Marseilles with a low sun
+strobing through a row of roadside trees. Behind his closed eyelids it broke into an
+overwhelming flood of colour and pattern, and he wrote it up that night as a storm of
+visions. He spent the next several years trying to get the effect back on demand.
+
+W. Grey Walter's *The Living Brain* supplied the mechanism: flicker at roughly the brain's
+own alpha rhythm drives the visual cortex into generating imagery of its own. In 1959 Ian
+Sommerville — a Cambridge mathematics student, and the technical mind of the pair — built
+the machine that exploited it. A cardboard cylinder with slots cut down its sides, stood on
+a record turntable, a light bulb hanging inside. Spin it, sit in front of it, close your
+eyes.
+
+<p align="center">
+  <img src="docs/images/gysin-portrait-1957.jpg" alt="Portrait of Brion Gysin, 1957" height="300">
+  <img src="docs/images/dreamachine-lit.jpg" alt="A Dreamachine cylinder lit from within" height="300">
+</p>
+
+<p align="center">
+  <em>Brion Gysin in 1957, the year before the bus ride (Carl Van Vechten, Library of
+  Congress) · a Dreamachine cylinder, lit (Wikimedia Commons). Both public domain.</em>
+</p>
+
+Gysin described it as the first work of art to be looked at with the eyes closed, and he
+was serious about it in a way he never quite was about the cut-up technique he'd handed to
+William Burroughs — "this cut-up thing is just not my bag, but this DREAMACHINE!" he wrote.
+He expected it to replace television: everyone generating their own imagery instead of
+receiving someone else's. He patented it in 1961, showed it in Paris in 1962, and failed
+completely to sell it. The pitch to consumer electronics manufacturers went nowhere, and
+the machine stayed a cult object passed between artists rather than an appliance.
+
+It didn't stay small forever. In 2022 a full-scale reimagining ran as part of the UK's
+UNBOXED programme — conceived by Jennifer Crook, with spatial design by Assemble, music by
+Jon Hopkins, and a consciousness-science programme attached to it involving the
+neuroscientist Anil Seth, cognitive neuroscientist David Schwartzman, and philosopher Fiona
+Macpherson. Audiences sat under flickering white light with their eyes closed, in a room
+built for it, while researchers studied what the brain does when you give it nothing to
+look at but rhythm. Sixty years on, the premise held.
+
+**This repo is that idea reduced to its smallest possible form:** the strobe, the tone, one
+slider, no room and no turntable. And one significant departure from the original — the
+widely circulated build plans put the classic 78-rpm cylinder's flicker near 20 Hz, dropping
+back into the alpha band only at 45 rpm. That upper figure sits inside the range this
+version deliberately refuses to enter. More on that in
+[Safety as a design constraint](#safety-as-a-design-constraint).
 
 ## The invariant
 
@@ -203,6 +248,20 @@ Deploys as a static export to Cloudflare Pages.
 calls at all after the initial load.** Nothing leaves the browser, because there's nowhere for
 it to go. The only persisted state on the machine is one `localStorage` key holding the consent
 timestamp.
+
+## Sources and credits
+
+History drawn from the [Wikipedia article on the
+Dreamachine](https://en.wikipedia.org/wiki/Dreamachine), Flashbak's [piece on Gysin's
+machine](https://flashbak.com/brion-gysins-dream-machine-the-only-work-of-art-you-look-at-with-your-eyes-closed-436094/)
+(which also reproduces Charles Gatewood's 1972 photograph of Gysin and Burroughs with the
+machine — worth seeing, and still in copyright, which is why it isn't shown here), the
+[construction plans and background at Rex Research](https://www.rexresearch.com/gysin/gysin.htm),
+and the modern project's own [about page](https://dreamachine.world/about/).
+
+Images are public domain: the 1957 Gysin portrait is Carl Van Vechten's, held by the
+[Library of Congress](https://www.loc.gov/item/2004662972/); the lit cylinder is
+[from Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Dreamachine_still_lit.jpg).
 
 ## License
 
