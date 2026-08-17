@@ -5,7 +5,7 @@ Work top to bottom. Each phase ends with **✅ Done when** acceptance checks —
 ## Phase -1 — Repo & project setup
 
 - [ ] `git init` (repo is not yet a git repo); confirm `.gitignore` covers `.env`
-- [ ] Verify `.env` has `VAULT_LOG_PATH` set and `.env.example` has the key empty
+- [x] Verify `log.md` exists at the repo root (the vault reads it directly for the Daily Brief)
 - [ ] Scaffold: `bunx create-next-app@latest . --typescript --tailwind --app --eslint --no-src-dir --import-alias "@/*"` (accept overwrite prompts carefully — keep `SPEC.md`, `CLAUDE.md`, `PLAN.md`, `.env*`)
 - [ ] `next.config.ts`: set `output: "export"`
 - [ ] Replace scripts in `package.json` with the SPEC §10 set: `dev` = `bun run --bun next dev`, `build` = `bun run --bun next build`, `preview` = `bunx wrangler pages dev out`
@@ -89,4 +89,4 @@ Color/pattern variation, guided/ramping frequency presets, TV version.
 
 ## Session rollup
 
-At the end of any session with real progress: append `- [[MM-DD-YY ddd]] — <what changed>` to the file at `VAULT_LOG_PATH` (from `.env`), newest under the latest `## YYYY-MM` header.
+At the end of any session with real progress: add an entry at the **top** of `log.md` at this repo's root, under the latest `## YYYY-MM` header. Ben's vault reads that file directly for his Daily Brief. See `CLAUDE.md` → "Project log" for the format and the session-spend line.

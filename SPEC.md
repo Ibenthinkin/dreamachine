@@ -151,9 +151,8 @@ Implementation notes:
 
 ## 13. Project setup — rollup to planning vault
 
-This project rolls progress back to a private planning vault so it surfaces in Ben's Daily Brief. As part of initial setup:
+This project rolls progress back to a private planning vault so it surfaces in Ben's Daily Brief. The mechanism is a **repo-side running log**: `log.md` at this repo's root, committed to git like any other file. The vault resolves this repo through its project root note's `repo:` field and reads `log.md` directly — no path from this repo into the vault, and nothing to keep in sync by hand.
 
-1. **Keep the path out of git.** The absolute path to this project's vault running log lives in `.env` as `VAULT_LOG_PATH` (the Idea Forge handoff usually pre-creates this file). Ensure `.env` is listed in `.gitignore`; if a `.env` isn't present, create one — `VAULT_LOG_PATH="$HOME/vaults/Memory-Palace/05 Projects/<name>/log.md"` — and commit a `.env.example` with the key but an empty value.
-2. **Add a rollup pointer to this repo's `CLAUDE.md`** (reference the variable, never the literal path):
+`CLAUDE.md` carries the full format and session-spend contract; see its "Project log" section.
 
-   > **Rollup to planning vault.** At the end of any session that made real progress, read `VAULT_LOG_PATH` from `.env` and append a one-line milestone entry to that file — format `- [[MM-DD-YY ddd]] — <what changed>`, newest under the latest `## YYYY-MM` header. Commits are pulled into the Daily Brief automatically; this log is for the narrative beats worth reading later.
+> [!note] **Superseded.** This section previously specified an env-var bridge — `VAULT_LOG_PATH` in a gitignored `.env`, pointing at a *vault-side* log that a session had to write into by hand. That pattern is retired vault-wide: it went stale in practice, here and elsewhere. Don't reintroduce it, and remove `VAULT_LOG_PATH` from any project that still references it.

@@ -41,6 +41,26 @@ UI layer: `app/page.tsx` renders `ConsentGate` (no consent record in `localStora
 - Strobe start latency < 100ms; audio/visual drift budget < ~20ms over 10 minutes.
 - No network calls after initial load; nothing leaves the browser.
 
-## Rollup to planning vault
+## Project log (`log.md`)
 
-At the end of any session that made real progress, read `VAULT_LOG_PATH` from `.env` and append a one-line milestone entry to that file — format `- [[MM-DD-YY ddd]] — <what changed>`, newest under the latest `## YYYY-MM` header. Commits are pulled into the Daily Brief automatically; this log is for the narrative beats worth reading later. (Reference the env var, never the literal path — it must stay out of git.)
+`log.md` at the repo root is this project's running log — the decisions, findings, and dead-ends that don't live in commit messages. It **complements** commits (which record *what changed in code*); don't duplicate what a commit already says.
+
+Ben's planning vault resolves this repo through the project root note's `repo:` field and reads this file directly for his Daily Brief. **A session that isn't logged here is invisible to him** — there are no hooks backing this up.
+
+**Format** — newest entry at the **top**, prepended. Never append to the bottom:
+
+- `## YYYY-MM` month groupers, newest month first.
+- `### [[MM-DD-YY ddd]] — <title>` day headings (wikilink form; one entry per day — a second write the same day *extends* that entry, never adds a duplicate heading).
+- Record the *why* — the reasoning, the alternatives rejected, what's next — not a line per commit.
+
+**Session spend** — every entry ends with a line recording the token spend of the work it covers. **Never estimate it**; get it from the shared script:
+
+```sh
+python3 ~/.claude/scripts/session-spend.py --session <session-uuid>
+```
+
+The session UUID is the second-to-last path component of the scratchpad path in your system prompt. Paste the script's stdout **verbatim**. **If it exits non-zero** (no transcript found, or nothing new since the last entry), **omit the line entirely** — don't substitute a guess.
+
+**Write triggers:** on demand; at commit checkpoints; and at the end of any session that made real progress, as a backstop for sessions that end without a commit.
+
+> [!note] **Superseded pattern.** This repo previously bridged its log into the vault via a `VAULT_LOG_PATH` env var in `.env`. That pattern is retired vault-wide — it required a human to copy lines over by hand and reliably went stale. The log now lives here, in git, and the vault reads it directly. If you find a lingering `VAULT_LOG_PATH` reference anywhere in this repo, remove it.
