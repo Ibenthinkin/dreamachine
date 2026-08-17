@@ -8,7 +8,7 @@
 
 **Problem.** There's no existing simple web app that combines a full-screen synced strobe with an isochronic tone in one place — the pieces exist separately (hardware Dreamachine reimplementations, audio-only isochronic tone generators, closed-source flashlight apps like Lumenate) but nothing does both as a lightweight website.
 
-**Scale & posture.** Personal — just the builder and friends. **Not commercial, no monetization, no accounts, no data collection.** Private GitHub repo.
+**Scale & posture.** Personal — just the builder and friends. **Not commercial, no monetization, no accounts, no data collection.** Source is public under Apache-2.0; the built site is not advertised from the repo (see §8).
 
 ### Core features
 
@@ -45,7 +45,7 @@
 - The disclaimer text stays visible in a persistent footer on the main screen too — accepting once doesn't hide the warning permanently.
 
 ### 3.2 Frequency control
-- One slider, range **4–13Hz** (theta through alpha), adjustable live while the strobe is running.
+- One slider, range **4–13Hz** (theta through alpha), adjustable live while the strobe is running. The upper bound is a safety ceiling — see §8.
 - Current Hz value shown numerically next to the slider.
 
 ### 3.3 Strobe playback
@@ -109,10 +109,32 @@ Implementation notes:
 
 ## 8. Security & safety considerations
 
-- No user data collected and nothing persisted server-side (there is no server) — no traditional attack surface.
+### 8.1 The frequency cap is the primary safety mechanism
+
+**The 4–13Hz range is a deliberate safety ceiling, not a taste decision.** Photosensitive response peaks in roughly the **15–25Hz** band; the slider's maximum stops short of it by design. A device that cannot reach the most provocative frequencies is safer than one that can and merely warns about it — this is a design-level constraint, and it does more real work than any additional paragraph of disclaimer copy.
+
+Enforcement matches the intent:
+
+- `clampFrequency` (`lib/strobeEngine.ts`) is applied inside both `start` and `setFrequency`, so the bound holds at the **engine boundary** — not just as the range input's `min`/`max`. A caller passing 40Hz gets 13Hz.
+- Both outputs read the same clamped value, so audio and light share the cap.
+
+**Raising `MAX_FREQUENCY_HZ` is a safety change, not a tuning change.** Treat any such edit as reopening this section, not as adjusting a preference.
+
+This narrows risk; it does not eliminate it. Photosensitive individuals can be provoked below 15Hz, which is exactly why the cap is layered with — not a substitute for — the gate, the persistent disclaimer, and the interrupt.
+
+### 8.2 Remaining safety surface
+
 - **Consent gate cannot be bypassed** — `DreamachineScreen` never renders without a valid consent record in `localStorage`.
 - **Escape hatch is load-bearing, not optional** — Space bar, tap-anywhere, and a dedicated Stop button must all halt both engine outputs immediately, wired independent of focus state.
 - Disclaimer text (18+, epilepsy-history exclusion, non-medical-device notice) stays visible during active use, not just at the gate.
+
+### 8.3 Distribution posture
+
+- **Publishing source and publishing a running strobe are separate decisions.** The source is public under Apache-2.0 (whose §7/§8 warranty disclaimer and limitation of liability are the reason for choosing it over a permissive license without them). The deployed site is **not linked from the repo** — anyone who wants to run it builds it or is sent the URL directly, which keeps a one-click strobe off the end of a public README.
+
+### 8.4 Conventional attack surface
+
+- No user data collected and nothing persisted server-side (there is no server) — no traditional attack surface. No analytics, no third-party requests, no network calls after initial load.
 
 ## 9. Testing strategy
 
@@ -122,7 +144,7 @@ Implementation notes:
 ## 10. Deployment
 
 - **Cloudflare Pages**, static export (`next.config.ts` → `output: "export"`). No server runtime required.
-- Repo: private GitHub repo at `~/Dev/dreamachine`; Cloudflare Pages connects directly to it for git-push deploys.
+- Repo: public GitHub repo (Apache-2.0) at `~/Dev/dreamachine`; Cloudflare Pages connects directly to it for git-push deploys. The deployed URL is deliberately not published in the repo — see §8.3.
 - Scripts:
   ```json
   "scripts": {
@@ -145,8 +167,8 @@ Implementation notes:
 ## 12. Open questions / risks
 
 - **Phase-lock drift over long sessions** — validate empirically in Phase 0. If `requestAnimationFrame`-derived phase drifts perceptibly, consider driving the visual toggle from an `AudioWorklet` clock tick instead of `rAF`.
-- **Slider range** — 4–13Hz (theta + alpha) is the starting span; confirm by ear/eye once built whether it's the right range or needs narrowing/widening.
-- **Mobile Safari behavior untested** — continuous audio + fullscreen strobe on iOS Safari wasn't confirmed against a directly relevant source during idea evaluation; smoke-test on an iPhone before considering this done.
+- ~~**Slider range**~~ — **settled, and settled as a safety decision, not a taste one.** 4–13Hz is final; the ceiling sits below the ~15–25Hz photosensitive-response peak. See §8.1 — widening it reopens that section.
+- ~~**Mobile Safari behavior untested**~~ — **resolved.** iPhone Safari smoke test passed (07-08-26), along with an offline/no-network check against the live deployment.
 - **Parked for later:** color/pattern variation (closer to the true "shapes and colors" visual effect), guided/ramping frequency presets (like Lumenate's sessions), a TV version.
 
 ## 13. Project setup — rollup to planning vault

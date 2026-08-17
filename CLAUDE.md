@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-**Built and deployed.** All PLAN.md phases done: private GitHub repo (`Ibenthinkin/dreamachine`) auto-deploys to Cloudflare Pages on push to `main` (build `bun run build`, output `out`). Desktop verified live. Outstanding: iOS Safari smoke test on a real iPhone (SPEC §12). `SPEC.md` remains the source of truth for requirements and architecture.
+**Built, deployed, and released.** All PLAN.md phases done: GitHub repo (`Ibenthinkin/dreamachine`) auto-deploys to Cloudflare Pages on push to `main` (build `bun run build`, output `out`). Desktop and iOS Safari both verified live; no open items in SPEC §12. The repo is **public under Apache-2.0**, but the deployed URL is deliberately not published in it — see SPEC §8.3. `SPEC.md` remains the source of truth for requirements and architecture.
 
 ## What this is
 
@@ -36,6 +36,7 @@ UI layer: `app/page.tsx` renders `ConsentGate` (no consent record in `localStora
 
 ## Non-negotiable safety constraints
 
+- **The 4–13Hz range is a safety ceiling, not a preference.** It stops short of the ~15–25Hz photosensitive-response peak on purpose, and `clampFrequency` enforces it inside `start`/`setFrequency` — at the engine boundary, not just the slider's `min`/`max`. Never widen `MAX_FREQUENCY_HZ` as a tuning tweak; it reopens SPEC §8.1.
 - **Consent gate cannot be bypassed.** `DreamachineScreen` never renders without `localStorage["dreamachine_consent_accepted_at"]` set. The 18+/epilepsy/non-medical disclaimer also stays visible in a footer during use.
 - **Safety interrupt is load-bearing.** Space bar, tap/click anywhere, and a dedicated Stop button must each immediately halt both audio and visual output, wired at the top level independent of focus — the user's eyes are closed during use.
 - Strobe start latency < 100ms; audio/visual drift budget < ~20ms over 10 minutes.

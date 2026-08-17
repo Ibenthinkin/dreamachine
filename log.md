@@ -2,13 +2,30 @@ Running log for Dreamachine. Newest entries at the top, under the latest `## YYY
 
 ## 2026-08
 
-### [[08-17-26 Mon]] — Log migrated repo-side
+### [[08-17-26 Mon]] — Log migrated repo-side; prepped for going public
+
+**Going public — the pre-flight list.** Repo is being flipped from private to public, and three things landed first:
+
+- **Apache-2.0 `LICENSE` added.** The repo had no license at all, which technically made it all-rights-reserved — nobody could legally fork it. Apache-2.0 over MIT specifically for §7 (warranty disclaimer) and §8 (limitation of liability): for a project whose entire function is flashing lights at people, that language is the closest thing to a real shield, and it's worth more than the brevity MIT buys. Text taken verbatim from the copy shipped in `node_modules/@playwright/test`, CRLF stripped, copyright line replaced; body diffed against the source to confirm it's unmodified.
+- **The 4–13Hz cap is now documented as a safety decision, not a spec detail.** This is the strongest safety argument the project has and it was previously invisible — the range sat in the spec looking like a taste call. A device that *cannot reach* the ~15–25Hz photosensitive-response peak is safer than one that can and merely warns; that's a design-level argument worth more than another paragraph of disclaimer copy. Written up in SPEC §8.1 (with the honest caveat that it narrows risk rather than eliminating it — sub-15Hz can still provoke, which is why the cap is layered with the gate/disclaimer/interrupt rather than replacing them), and mirrored into README, `CLAUDE.md`'s non-negotiables, and a comment over the constants in `lib/strobeEngine.ts`. The load-bearing detail in all four: `clampFrequency` runs inside `start`/`setFrequency`, so the bound holds at the **engine boundary**, not just as the slider's `min`/`max`. Framed everywhere as "raising `MAX_FREQUENCY_HZ` reopens SPEC §8.1" so a future session can't treat it as a tuning tweak.
+- **Demo link pulled from the README.** Publishing source and handing strangers a one-click strobe are separable decisions, and Ben split them: source public, deployed URL not advertised from the repo. He's changing the Cloudflare URL separately so the link sitting in commit `cd21b52` dies with it — which is why no history rewrite was needed. README now says the omission is deliberate rather than leaving a silent gap; recorded as posture in SPEC §8.3.
+
+Also swept while in here: SPEC §12's two open questions are closed (slider range settled *as a safety decision*; iOS Safari smoke test passed 07-08), `private GitHub repo` references updated across SPEC/`CLAUDE.md`, and `license: "Apache-2.0"` added to `package.json` (kept `private: true` — that's npm-publish protection, unrelated to repo visibility).
+
+**Checked before flipping visibility:** `.env` was never committed (gitignored from the initial commit); a secret scan across all of `git rev-list --all` came back with only false positives (bun.lock integrity hashes, the word "spend" in `CLAUDE.md`). 20 Vitest tests green, lint clean.
+
+**Next:** flip repo visibility on GitHub, change the Cloudflare Pages URL.
+
+---
 
 **Changed:** this file replaces the vault-side log at `05 Projects/Dreamachine/log.md`, which was bridged in via a `VAULT_LOG_PATH` env var in `.env`. Dreamachine was the last project still on that retired pattern; the vault's `/brief` now reads this file directly through the project root note's `repo:` field. The `VAULT_LOG_PATH` references in `CLAUDE.md`, `SPEC.md`, `PLAN.md`, and `.env.example` were removed in the same pass, and the vault-side log carries a retirement banner pointing here.
 
 **Why:** the env-var bridge required a human or a session to copy a line into the vault by hand at milestone beats, and it went stale — this log's last entry was 07-08 despite the repo being live. A log that lives in git next to the code it describes can't drift from it.
 
 Entries below 07-08 are carried over verbatim from the vault-side log.
+
+*Session spend: 3.37M tok (in 94 · out 27.0k · cache r 3.21M / w 134.1k) · ~$3.62 · opus-5 · 11:20→11:47*
+*Session spend: 337.3k tok (in 8 · out 3.3k · cache r 331.1k / w 2.9k) · ~$0.28 · opus-5 · 11:47→11:48*
 
 ## 2026-07
 

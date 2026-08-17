@@ -8,6 +8,15 @@
  *    on/off via the pure phase function, and notifies onTick subscribers.
  */
 
+/**
+ * Frequency range — a safety ceiling, not a preference (SPEC §8).
+ *
+ * 4–13Hz spans theta through alpha, and stops deliberately short of the ~15–25Hz
+ * band where photosensitive response peaks. `clampFrequency` is applied inside
+ * `start` and `setFrequency`, so the cap holds at the engine boundary rather than
+ * depending on the slider's min/max. Widening MAX_FREQUENCY_HZ is a safety
+ * decision, not a tuning one.
+ */
 export const MIN_FREQUENCY_HZ = 4;
 export const MAX_FREQUENCY_HZ = 13;
 export const DEFAULT_FREQUENCY_HZ = 8;
