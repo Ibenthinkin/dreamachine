@@ -2,7 +2,21 @@ Running log for Dreamachine. Newest entries at the top, under the latest `## YYY
 
 ## 2026-08
 
-### [[08-17-26 Mon]] — Log migrated repo-side; prepped for going public
+### [[08-17-26 Mon]] — Log migrated repo-side; prepped for going public; README rewritten as a portfolio piece
+
+**README rewritten to carry the repo as a portfolio piece.** Ben's goal: someone lands cold and comes away impressed by the writing's readability and usefulness. Picked the spine deliberately before writing — the options were "this person engineers carefully" vs. the art-object story vs. fork-me documentation, and he chose engineering judgment, so the README opens on the *drift problem* rather than on Gysin. Gysin gets two clauses of orientation and then it's the invariant, the architecture, the subtle bits, and the evidence.
+
+The argument it makes: the app never synchronizes light to tone, it makes both **pure functions of one clock**, so drift isn't corrected — it's unrepresentable. Sections follow from that: the shared half-cycle grid (`t = j/2f`), a mermaid diagram of the two paths hanging off `AudioContext.currentTime`, the pure core, the mid-session frequency change (the genuinely subtle part — cancel the old grid, anchor at current gain, ramp to what the new grid says, resume), and a "Proving it" section built around the one test that checks the invariant directly by asking `isStrobeOn` whether it agrees with the audio scheduler's own gate events.
+
+Two things written in on purpose. First, a preempt: a sharp reader will notice a 25ms `setInterval` after a claim of "no timers", so the README calls it out — the interval decides *when to schedule*, never *when a pulse happens*. Second, the safety section leads with "warnings are the weakest safety mechanism available — they transfer risk to the user and call it consent", then presents the three structural moves (the 4–13Hz ceiling, a consent gate that's the SSR default rather than a redirect, a default-deny interrupt where everything stops the strobe except `[data-stop-exempt]` controls). That reframes the safety work as engineering rather than as compliance copy.
+
+Ruled out an animated strobe GIF without asking — it would autoplay for every visitor, including the photosensitive people the project exists to protect. Ben chose mermaid-only for visuals. **Verified the diagram actually renders** rather than assuming: extracted the block from the README, rendered it headlessly through the repo's own Playwright against mermaid 11, confirmed 8 nodes and a clean SVG, then added `audio path` / `visual path` edge labels after looking at the output and re-verified.
+
+Also fact-checked the prose against the source rather than from memory — corrected the Gysin attribution (added Ian Sommerville, softened the date to "the start of the 1960s"), fixed a claim that "any keypress" halts output (Space toggles, so it starts too), and confirmed the 16-notifications-per-second figure and every code excerpt line-by-line against `lib/strobeEngine.ts`.
+
+**Next:** flip repo visibility on GitHub, change the Cloudflare Pages URL.
+
+---
 
 **Going public — the pre-flight list.** Repo is being flipped from private to public, and three things landed first:
 
@@ -14,8 +28,6 @@ Also swept while in here: SPEC §12's two open questions are closed (slider rang
 
 **Checked before flipping visibility:** `.env` was never committed (gitignored from the initial commit); a secret scan across all of `git rev-list --all` came back with only false positives (bun.lock integrity hashes, the word "spend" in `CLAUDE.md`). 20 Vitest tests green, lint clean.
 
-**Next:** flip repo visibility on GitHub, change the Cloudflare Pages URL.
-
 ---
 
 **Changed:** this file replaces the vault-side log at `05 Projects/Dreamachine/log.md`, which was bridged in via a `VAULT_LOG_PATH` env var in `.env`. Dreamachine was the last project still on that retired pattern; the vault's `/brief` now reads this file directly through the project root note's `repo:` field. The `VAULT_LOG_PATH` references in `CLAUDE.md`, `SPEC.md`, `PLAN.md`, and `.env.example` were removed in the same pass, and the vault-side log carries a retirement banner pointing here.
@@ -26,6 +38,7 @@ Entries below 07-08 are carried over verbatim from the vault-side log.
 
 *Session spend: 3.37M tok (in 94 · out 27.0k · cache r 3.21M / w 134.1k) · ~$3.62 · opus-5 · 11:20→11:47*
 *Session spend: 337.3k tok (in 8 · out 3.3k · cache r 331.1k / w 2.9k) · ~$0.28 · opus-5 · 11:47→11:48*
+*Session spend: 8.64M tok (in 186 · out 76.1k · cache r 7.85M / w 708.2k) · ~≥$12.56 · opus-5 + opus-4-7 + &lt;synthetic&gt; · 11:48→15:53*
 
 ## 2026-07
 
