@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Not in use</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #fbfbf9;
+    --fg: #1a1a18;
+    --muted: #6b6b64;
+    --rule: #e2e2dc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121211;
+      --fg: #e8e8e3;
+      --muted: #8d8d85;
+      --rule: #2a2a27;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--bg);
+    color: var(--fg);
+    font: 400 16px/1.6 ui-sans-serif, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 30rem; }
+  h1 {
+    margin: 0 0 1.25rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  p { margin: 0 0 1rem; color: var(--muted); }
+  p:last-of-type { margin-bottom: 0; }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 1.75rem 0;
+  }
+  a { color: inherit; text-decoration-color: var(--rule); }
+  a:hover { text-decoration-color: currentColor; }
+</style>
+</head>
+<body>
+<main>
+  <h1>This address is no longer in use.</h1>
+  <p>
+    It once pointed at a temporary deployment. That deployment has been
+    retired, and there is no redirect — if you got here from an old
+    bookmark or a link in a git history, the link is simply dead.
+  </p>
+  <hr>
+  <p>
+    The project's source lives at
+    <a href="https://github.com/Ibenthinkin/dreamachine">github.com/Ibenthinkin/dreamachine</a>.
+  </p>
+</main>
+</body>
+</html>
