@@ -2,7 +2,21 @@ Running log for Dreamachine. Newest entries at the top, under the latest `## YYY
 
 ## 2026-08
 
-### [[08-17-26 Mon]] — Log migrated repo-side; prepped for going public; README rewritten as a portfolio piece
+### [[08-17-26 Mon]] — URL rotation planned + `parked` branch shipped; log migrated repo-side; prepped for going public; README rewritten as a portfolio piece
+
+**URL rotation: the old project gets parked, not deleted.** Working out how to change the live URL surfaced the constraint that decides the whole approach — Cloudflare has **no rename for a Pages project**. The hostname is literally `<project-name>.pages.dev`, fixed at creation, so "change the URL" can only mean a new project under a new name. Adding a custom domain doesn't substitute: it leaves the old `pages.dev` serving alongside it.
+
+The non-obvious part is what happens to `dreamachine-s5k` afterwards. Deleting it **releases the name back to Cloudflare's pool**, so anyone could then create a project called `dreamachine-s5k` and serve whatever they like at the exact URL sitting in commit `cd21b52` — which a reader of this repo's history would reasonably trust. That's the inverse of what pulling the demo link was for: a stranger lands on someone else's page rather than a dead one. So the old project stays alive and inert instead: it keeps the name permanently and guarantees the historical link resolves to nothing.
+
+**Built the `parked` branch** (`0ce6293`) — an orphan branch, no shared history with `main`, no application code: `index.html` (static notice, no JS), a byte-identical `404.html` so deep links land on it too, `robots.txt` disallowing all plus a `noindex` meta tag, and a README explaining why the branch exists so a future session doesn't "fix" it. Deliberately **no `package.json`** — the retired project gets configured with an empty build command and output directory `/`, so it uploads rather than builds. A `package.json` on this branch would trigger a real Next build and defeat the point; that's written into the branch README as a warning.
+
+Notice copy points at the GitHub repo and *not* at the new deployment, holding the SPEC §8.3 posture — source public, deployed URL unadvertised. Built it in a throwaway git worktree so the `main` working tree was never touched.
+
+Verified rather than assumed, again: the Claude browser extension wasn't connected, so rendered the page headlessly through the repo's own Playwright at both `colorScheme: light` and `dark` and screenshotted both, and confirmed `404.html` serves the same notice. Renders correctly in both themes.
+
+**Next — Ben's dashboard steps, and the order matters.** Stand up the new Pages project *first* and verify it, then repoint `dreamachine-s5k` at `parked` (production branch → `parked`, build command → empty, output → `/`, preview branches → None) and push an empty commit to trigger that deploy. The repo visibility flip stays held until the old URL is confirmed serving the notice.
+
+---
 
 **History and concept folded into the README, with photos.** Ben supplied three sources (Wikipedia, Flashbak, Rex Research) plus the modern [dreamachine.world](https://dreamachine.world/about/) project, and asked for the concept explained and illustrated. New "Where this comes from" section: Gysin's December 1958 bus ride outside Marseilles, W. Grey Walter's *The Living Brain* supplying the mechanism, Sommerville building the first cylinder in 1959, the 1961 patent and the total commercial failure after the 1962 Paris showing, then the 2022 UNBOXED reimagining (Jennifer Crook / Assemble / Jon Hopkins, with Anil Seth and Fiona Macpherson on the science side).
 
@@ -56,6 +70,7 @@ Entries below 07-08 are carried over verbatim from the vault-side log.
 *Session spend: 8.64M tok (in 186 · out 76.1k · cache r 7.85M / w 708.2k) · ~≥$12.56 · opus-5 + opus-4-7 + &lt;synthetic&gt; · 11:48→15:53*
 *Session spend: 11.48M tok (in 142 · out 58.8k · cache r 11.33M / w 87.8k) · ~$8.01 · opus-5 · 15:53→16:32*
 *Session spend: 1.65M tok (in 18 · out 6.6k · cache r 1.32M / w 329.2k) · ~$4.12 · opus-5 · 16:32→19:07*
+*Session spend: 5.17M tok (in 122 · out 48.4k · cache r 4.54M / w 587.8k) · ~$9.36 · opus-5 · 21:31→23:11*
 
 ## 2026-07
 
