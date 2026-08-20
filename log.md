@@ -2,6 +2,22 @@ Running log for Dreamachine. Newest entries at the top, under the latest `## YYY
 
 ## 2026-08
 
+### [[08-20-26 Thu]] — Repo flipped public; release closed out
+
+**Ben flipped `Ibenthinkin/dreamachine` to public.** Verified from outside the account rather than from the dashboard: anonymous, unauthenticated `curl` against the repo page and the `raw.githubusercontent.com` copies of `README.md` and `log.md` all return 200, and the GitHub API reports `visibility: PUBLIC`, `Apache-2.0`, default branch `main`. That closes the last open item in the project — the flip had been held since 08-17 pending the URL rotation.
+
+**Re-verified the blocker was actually clear before the flip, instead of trusting the 08-17 entry.** The rotation is the whole reason the flip was held, so it got checked live rather than read back: `dreamachine-s5k.pages.dev/` returns the parked notice with **zero** seizure/epilepsy/strobe markers in the served HTML, an unknown deep path 404s to a byte-identical notice, `robots.txt` is `Disallow: /` alongside the `noindex, nofollow` meta, and `main.dreamachine-s5k.pages.dev` 404s — no residual app on a branch alias. The demo link in commit `cd21b52` is inert, and the name stays claimed so it can't be re-registered and pointed at something a reader of this repo's history would reasonably trust.
+
+**Pre-flight, re-run rather than assumed.** Scanned every commit reachable from `git rev-list --all` for `*.pages.dev` hostnames: the only two that appear anywhere are `dreamachine-s5k.pages.dev` and its dead `main.` alias — **the new deployment's hostname appears nowhere in the repo or its history**, which is the §8.3 posture actually holding rather than just being stated. `.env` has no commit touching it in any branch; the secret sweep across all history came back empty once `bun.lock` integrity hashes were excluded. 20/20 Vitest green and `bun run lint` clean at exit 0.
+
+**The one judgment call was `log.md` itself**, since flipping visibility publishes this file too — including the per-entry session-spend lines with real dollar figures, and the references to Ben's private planning vault here and in `SPEC.md` §13 / `PLAN.md` / `.env.example`. Recommended keeping all of it: for a repo whose README claims careful engineering judgment, the log is the evidence for that claim, and the vault references name a workflow rather than exposing a path into anything. The spend lines were the only genuinely arguable part — they publish what the project cost to build. Ben flipped without stripping them, so that's settled: the log stays candid.
+
+**No doc drift to fix.** `CLAUDE.md` and `SPEC.md` §8.3/§11 already described the repo as public — written ahead of the flip on 08-17 — so they became accurate on the flip rather than needing an edit.
+
+**Next:** nothing outstanding. v1 is built, deployed, verified on desktop and iOS Safari, and now public under Apache-2.0 with the deployed URL unadvertised.
+
+*Session spend: 1.54M tok (in 46 · out 16.7k · cache r 1.35M / w 168.8k) · ~$2.78 · opus-5 · 10:01→10:21*
+
 ### [[08-17-26 Mon]] — URL rotation planned + `parked` branch shipped; log migrated repo-side; prepped for going public; README rewritten as a portfolio piece
 
 **URL rotation: the old project gets parked, not deleted.** Working out how to change the live URL surfaced the constraint that decides the whole approach — Cloudflare has **no rename for a Pages project**. The hostname is literally `<project-name>.pages.dev`, fixed at creation, so "change the URL" can only mean a new project under a new name. Adding a custom domain doesn't substitute: it leaves the old `pages.dev` serving alongside it.
